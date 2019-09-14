@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'polls',
     'eventze',
     'home',
-    'crispy_forms'
+    'crispy_forms',
+    'emergency',
+    'webpush'
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
@@ -104,7 +106,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BJe6z_ChajDdzeDmX-l2B-6Ql203PABqNB6OwJTpwAl6uceDsO9cfo94_ZdJXeYMCRkshHa0OEPWvY_54S6Ec80",
+   "VAPID_PRIVATE_KEY": "Af0T1FFi9qM18KtPURIfNF4mSdi0UgaLhtABoDWiWXg",
+   "VAPID_ADMIN_EMAIL": "rbajajvit2016@gmail.com"
+}
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 

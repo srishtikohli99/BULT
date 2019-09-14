@@ -23,4 +23,5 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('eventze/',include('eventze.urls')),
     path('home/',include('home.urls')),
+    path('emergency/',include('emergency.urls')),
 ]

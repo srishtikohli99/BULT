@@ -19,4 +19,8 @@ def feed(request):
 def live(request):
 
     return render(request,'eventze/live.html')
+
+def display(request):
+
+    return render(request,'eventze/display.html')
 # Create your views here.
