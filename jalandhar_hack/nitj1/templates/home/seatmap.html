@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+
+<script type="text/javascript">
+	var firebaseConfig = {
+  		apiKey: "KmA3IPZjdcV6gn0wHF1t0DSJGSg9iAexvJl8HMow",
+  		authDomain: "smart-audi.firebaseio.com",
+  		databaseURL: "https://smart-audi.firebaseio.com/",
+  		projectId: "smart-audi",
+  		storageBucket: "smart-audi.appspot.com",
+  		messagingSenderId: "246323352532"
+	};
+	firebase.initializeApp(firebaseConfig);
+	var ref = firebase.database().ref();                           
+	ref.on("value", function(snapshot){
+		var LOCALFILE = snapshot.val();
+		init(LOCALFILE);
+		fillseats(LOCALFILE);
+	});
+	function init(LOCALFILE)
+	{
+		var x = LOCALFILE.x_num;
+		var y = LOCALFILE.y_num;
+		var i;
+		var j;
+		var map = document.createElement("div");
+		map.className = "map";
+		document.body.appendChild(map); 
+		for(i=1;i<=x;i++)
+		{
+			var row = document.createElement("div");
+			row.className = "seat-row";
+			row.id = i.toString();
+			map.appendChild(row);
+			for(j=1;j<=y;j++)
+			{
+				var seat = document.createElement("div");
+				seat.className = "seat-empty";
+				seat.id = i.toString()+"-"+j.toString();
+				row.appendChild(seat);
+			}
+		}
+	}
+	function fillseats(LOCALFILE)
+	{
+		var seat_data = LOCALFILE;
+		var seat_info = seat_data.seats;
+		Object.keys(seat_info).forEach(
+			function(k)
+			{
+				var seat_id = k;
+				var x_coor = seat_info[k].x;
+				var y_coor = seat_info[k].y;
+    			var seat = document.getElementById(x_coor.toString()+"-"+y_coor.toString());
+    			seat.className = "seat-present";
+    			seat.title = k;
+    			if(seat_info[k].seated == true)
+    			{
+    				seat.className = "seat-occupied";
+    			}
+<!--    			if(seat_info[k].handraise == true)-->
+<!--    			{-->
+<!--    				seat.className = "seat-handraise";-->
+<!--    			}-->
+    			if(seat_info[k].emergency == true)
+    			{
+    				seat.className = "seat-emergency";
+    			}
+			}
+		);
+	}
+</script>
+<body>
+<br>
+
+	<style type="text/css">
+		.seat-empty{
+			display: inline-block;
+			height: 40px;
+			width: 40px;
+			background-size:80% 80%;
+		}
+		.seat-present{
+			display: inline-block;
+			background: url({% static 'images/seat_empty.png' %}) no-repeat;
+			height: 40px;
+			width: 40px;
+			background-size:80% 80%;
+		}
+		.seat-occupied{
+			display: inline-block;
+			background: url({% static 'images/seat_occupied.png' %}) no-repeat;
+			height: 40px;
+			width: 40px;
+			background-size:80% 80%;
+		}
+		.seat-emergency{
+			display: inline-block;
+			background: url({% static 'images/seat_emergency.png' %}) no-repeat;
+			height: 40px;
+			width: 40px;
+			background-size:80% 80%;
+		}
+<!--		.seat-handraise{-->
+<!--			display: inline-block;-->
+<!--			background: url({% static 'images/seat_handraise.png' %}) no-repeat;-->
+<!--			height: 40px;-->
+<!--			width: 40px;-->
+<!--			background-size:80% 80%;-->
+<!--		}-->
+	</style>
+</body>
+</html>

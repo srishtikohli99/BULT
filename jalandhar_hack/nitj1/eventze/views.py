@@ -1,19 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from eventze.forms import FormName
+from eventze.forms import formfeed
+
 #from forms import FormName
 def index(request):
     return HttpResponse("Hello")
 
 def feed(request):
-    form = FormName()
+    form = formfeed()
     if request.method == 'POST':
-        form=FormName(request.POST)
+        form=formfeed(request.POST)
 
         if form.is_valid():
-            print("Name"+form.cleaned_data['name'])
-            print("Email"+form.cleaned_data['email'])
-            print("Feedback"+form.cleaned_data['feedback'])
+            form.save(commit = True)
+            return index(request)
+            # print("Name"+form.cleaned_data['name'])
+            # print("Email"+form.cleaned_data['email'])
+            # print("Feedback"+form.cleaned_data['feedback'])
+
 
     return render(request,'eventze/feed.html',{'form':form})
 def live(request):
@@ -23,4 +27,8 @@ def live(request):
 def display(request):
 
     return render(request,'eventze/display.html')
+
+
+
+
 # Create your views here.

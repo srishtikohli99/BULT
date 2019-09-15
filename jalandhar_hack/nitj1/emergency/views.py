@@ -39,7 +39,7 @@ def test(request):
 
     #data = {'emergency': True, 'seated': False, 'x': 1, 'y': 1}
     data = {'seated':True}
-    snap = fire.patch('/seats/C3/',data)
+    snap = fire.patch('/seats/C2/',data)
     print("Rahul")
     #firebase.get_async('/seats/A3', snap, callback=callback_get)
     #result = fire.get('/seats/A3/emergency', None)
