@@ -12,8 +12,8 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from webpush import send_user_notification
 import json
-
-
+from datetime import datetime
+from .trans import servstart
 config = {
 'apiKey': "KmA3IPZjdcV6gn0wHF1t0DSJGSg9iAexvJl8HMow",
 'authDomain': "smart-audi.firebaseio.com",
@@ -33,17 +33,34 @@ def index(request):
 
     return render(request, 'emergency/template.html', context=my_dict)
 
+def testing1(request):
+    servstart()
+    return
+
+def testing2(request, trancript):
+    fire = firebase.FirebaseApplication('https://smart-audi.firebaseio.com/', None)
+    data = {str(datetime.now().microsecond): trancript}
+    snap = fire.patch('/speech_to_text/', data)
+    result = fire.get('/speech_to_text/', None)
+    print(result)
+    return HttpResponse("Hel")
+
+def virt(request):
+
+    return HttpResponse("Virtual Handraise Invoked")
 def test(request):
     my_dict = {'insert_me': 'Srishti'}
     fire = firebase.FirebaseApplication('https://smart-audi.firebaseio.com/', None)
-
-    #data = {'emergency': True, 'seated': False, 'x': 1, 'y': 1}
-    data = {'seated':True}
-    snap = fire.patch('/seats/C2/',data)
-    print("Rahul")
-    #firebase.get_async('/seats/A3', snap, callback=callback_get)
-    #result = fire.get('/seats/A3/emergency', None)
-    #print(result)
+    result = fire.get('/speech_to_text',None)
+    print(result)
+    # # #data = {'emergency': True, 'seated': False, 'x': 1, 'y': 1}
+    # s = result.append('ppk')
+    data = {str(datetime.now().microsecond):'mizu'}
+    snap = fire.patch('/speech_to_text',data)
+    # # print("Rahul")
+    # # #firebase.get_async('/seats/A3', snap, callback=callback_get)
+    # result = fire.get('/speech_to_text', None)
+    # print(result)
     return render(request, 'emergency/template.html', context=my_dict)
 # Create your views here.
 

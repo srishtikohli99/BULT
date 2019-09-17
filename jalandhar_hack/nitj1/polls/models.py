@@ -55,9 +55,13 @@ class Offline_Question(models.Model):
 
     def __str__(self):
         #l=[self.question_text,self.question_id]
-        return self.question_text
+        return str(self.question_id)
 
 class Offline_Response(models.Model):
     question = models.ForeignKey(Offline_Question, on_delete=models.CASCADE, blank=True)
     client_ip = models.CharField(max_length=200)
     Value=models.CharField(max_length=200)
+
+    def __str__(self):
+        s=self.client_ip+','+str(self.question)
+        return str(s)

@@ -14,7 +14,7 @@ def index(request):
 
 def off_res(request, ans):
     ques = Offline_Question.objects.values_list('question_id','status','A','B','C','D')
-    print(ques[0][0])
+    #print(ques[0][0])
     #q = Offline_Question.objects.filter(status='I')
     #print(q)
     q=None
@@ -28,12 +28,28 @@ def off_res(request, ans):
     obje = Offline_Question.objects.filter(question_id=q).first()
     print(obje)
     ip, is_routable = get_client_ip(request)
+    #print(type(q))
+    print("hahah")
+    anses = Offline_Response.objects.values_list('client_ip','question')
+    temp_list = []
+    for ttt in anses:
+        temp_list.append(list(ttt))
+    print(temp_list)
+    print(type(ip))
     if q == None:
         return HttpResponse('No active question available')
     else:
+        for ti in temp_list:
+            #print(type(ti[]))
+            if ti[0] == ip and str(ti[1]) == str(q):
+                print("Great")
+                return HttpResponse("Your Response Already exist")
+
         ores = Offline_Response()
         ores.client_ip = ip
         ores.question = obje
+
+
         if ans == 'A':
             ores.Value = a
             #Offline_Response.objects.create('question'=q,'client_ip'=ip,'Value'=a)

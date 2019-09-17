@@ -2,10 +2,14 @@
 {% load staticfiles %}
 <html>
 <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 	var firebaseConfig = {
@@ -31,7 +35,7 @@
 		var j;
 		var map = document.createElement("div");
 		map.className = "map";
-		document.body.appendChild(map); 
+		document.getElementById("seat-map").appendChild(map); 
 		for(i=1;i<=x;i++)
 		{
 			var row = document.createElement("div");
@@ -51,69 +55,154 @@
 	{
 		var seat_data = LOCALFILE;
 		var seat_info = seat_data.seats;
+		var total = 0;
+		var seated = 0;
+		var hand_raised = 0;
+		var emergency = 0;
+		var list_emer = [];
+		var list_hand = [];
 		Object.keys(seat_info).forEach(
 			function(k)
 			{
 				var seat_id = k;
 				var x_coor = seat_info[k].x;
 				var y_coor = seat_info[k].y;
+				total = total + 1;
     			var seat = document.getElementById(x_coor.toString()+"-"+y_coor.toString());
     			seat.className = "seat-present";
     			seat.title = k;
     			if(seat_info[k].seated == true)
     			{
     				seat.className = "seat-occupied";
+    				seated = seated + 1;
     			}
-<!--    			if(seat_info[k].handraise == true)-->
-<!--    			{-->
-<!--    				seat.className = "seat-handraise";-->
-<!--    			}-->
+    			if(seat_info[k].hand_raise == true)
+    			{
+    				seat.className = "seat-handraise";
+    				hand_raised = hand_raised + 1;
+    				list_hand.push(k);
+    			}
     			if(seat_info[k].emergency == true)
     			{
     				seat.className = "seat-emergency";
+    				emergency = emergency + 1;
+    				list_emer.push(k);
     			}
 			}
 		);
+		var res = '<table class="table table-hover" style="line-height:1">'+
+		'<thead class="thead-dark"><tr><th colspan="2">Statistics</th></tr></thead>'+
+		'<tbody><tr><td><img class="img" src="{% static 'images/seat_empty.png' %}">Total Seats</td><td>'+total+'</td></tr>'+
+		'<tr><td><img class="img" src="{% static 'images/seat_occupied.png' %}">Filled Seats</td><td>'+seated+'</td></tr>'+
+		'<tr><td><img class="img" src="{% static 'images/seat_emergency.png' %}">Emergencies</td><td>'+emergency+'</td></tr>'+
+		'<tr><td><img class="img" src="{% static 'images/seat_handraise.png' %}">Hand Raises</td><td>'+hand_raised+'</td></tr>';
+		if(list_emer.length!=0)
+		{
+    		res = res +'<tr><td style="background: red; color: white; font-weight: bold" colspan="2">Emergencies</td></tr>';
+    		list_emer.forEach(function(k){
+    			res += '<tr><td colspan="2"><img class="img" src="{% static 'images/seat_emergency.png' %}">'+k.toString()+'</td</tr>';
+    		});
+    	}
+    	if(list_hand.length!=0)
+		{
+    		res = res +'<tr><td style="background: purple; color: white; font-weight: bold" colspan="2">Hand Raises</td></tr>';
+    		list_hand.forEach(function(k){
+    			res += '<tr><td colspan="2"><img class="img" src="{% static 'images/seat_handraise.png' %}">'+k.toString()+'</td</tr>';
+    		});
+    	}
+	    res = res + '</tbody></table>';
+	    document.getElementById("stat").innerHTML = res;
 	}
 </script>
 <body>
-<br>
-
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">BULT Smart Seating</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+<!--          <li class="nav-item active">-->
+            <li class="nav-item">
+            <a class="nav-link" href="/home/">Home </a>
+<!--              <span class="sr-only">(current)</span>-->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Seating</a>
+          </li>
+        </ul>
+<!--        <form class="form-inline mt-2 mt-md-0">-->
+<!--          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+<!--          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--        </form>-->
+      </div>
+    </nav><br><br><br>
+<div class="col-8">
+          <center><h2 class="mt-2">Seat -&nbsp;Map</h2></center>
+</div>
 	<style type="text/css">
+		.container{
+			margin: 0;
+			max-width: none;
+		}
+		.seat-row{
+			text-align: -webkit-center;
+		}
 		.seat-empty{
 			display: inline-block;
 			height: 40px;
 			width: 40px;
-			background-size:80% 80%;
 		}
 		.seat-present{
 			display: inline-block;
 			background: url({% static 'images/seat_empty.png' %}) no-repeat;
+			background-size: 90%;
 			height: 40px;
 			width: 40px;
-			background-size:80% 80%;
+			background-position: center bottom;
 		}
 		.seat-occupied{
 			display: inline-block;
 			background: url({% static 'images/seat_occupied.png' %}) no-repeat;
+			background-size: 90%;
 			height: 40px;
 			width: 40px;
-			background-size:80% 80%;
+			background-position: center bottom;
 		}
 		.seat-emergency{
 			display: inline-block;
 			background: url({% static 'images/seat_emergency.png' %}) no-repeat;
+			background-size: 90%;
 			height: 40px;
 			width: 40px;
-			background-size:80% 80%;
+			background-position: center bottom;
 		}
-<!--		.seat-handraise{-->
-<!--			display: inline-block;-->
-<!--			background: url({% static 'images/seat_handraise.png' %}) no-repeat;-->
-<!--			height: 40px;-->
-<!--			width: 40px;-->
-<!--			background-size:80% 80%;-->
-<!--		}-->
+		.seat-handraise{
+			display: inline-block;
+			background: url({% static 'images/seat_handraise.png' %}) no-repeat;
+			background-size: 90%;
+			height: 40px;
+			width: 40px;
+			background-position: center bottom;
+		}
+		.img{
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 10px;
+			height: 100%;
+		}
+		.table td{
+			vertical-align: middle;
+		}
 	</style>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8" id="seat-map"></div>
+			<div class="col-sm-4" id="stat"></div>
+		</div>	
+	</div>
 </body>
 </html>
