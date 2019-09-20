@@ -7,5 +7,5 @@ urlpatterns = [
     path('feed/',views.feed, name='feed'),
     path('live/',views.live, name='live'),
     path('events/',views.display, name='display'),
-
+    path('transcribe/',views.transcribe, name='transcribe'),
 ]

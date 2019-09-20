@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from polls.models import Question,Choice,Offline_Question,Offline_Response
 from eventze.models import Event
@@ -6,10 +6,12 @@ from ipware import get_client_ip
 # Create your views here.
 
 def index(request):
-    #return HttpResponse("Hello")
-    event_list  = []#Event.objects.order_by('-pub_date')
-    my_dict = {'insert_me':event_list}
-    return render(request, 'polls/index.html', context=my_dict)
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+
+    context = {
+        'latest_question_list': latest_question_list,
+    }
+    return render(request, 'polls/page1.html', context)
 
 
 def off_res(request, ans):
@@ -69,3 +71,54 @@ def off_res(request, ans):
 
 
     return HttpResponse(ans)
+
+
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/indexx.html', {'question': question})
+
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question': question})
+
+
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+# Create your views here.
+
+def thanks(request):
+    # list = get_object_or_404 ( Choice, pk=choice_id)
+    if request.method == 'POST':
+        x = request.POST.get('choice')
+        x = int(x)
+        table = Choice.objects.all().values_list()
+        for e in table:
+            if int(e[0]) == x:
+                print("match")
+                print(e[0])
+                t = Choice.objects.get(id=x)
+                t.votes += 1
+                t.save()
+
+                # this will update only
+            # print(e.vote)
+
+        return render(request, 'polls/page3.html')

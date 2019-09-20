@@ -39,25 +39,27 @@
 	<table class="table table-hover">
 		<thead class="thead-dark">
 			<tr>
-				<th>COL1</th>
-				<th>COL2</th>
-				<th>COL3</th>
-				<th>COL4</th>
+				<th>Event ID</th>
+				<th>Event Name</th>
+				<th>Event Date</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 		<tbody>
+		{% for item in query_results %}
 			<tr>
-				<td>John</td>
-				<td>Doe</td>
-				<td>john@example.com</td>
-				<td>ahahjs</td>
+				<td>{{item.event_id}}</td>
+				<td>{{item.event_name}}</td>
+				<td>{{item.event_date}}</td>
+				<td>{{item.status}}</td>
 			</tr>
-			<tr>
-				<td>John</td>
-				<td>Doe</td>
-				<td>john@example.com</td>
-				<td>ahahjs</td>
-			</tr>
+		{% endfor %}
+<!--			<tr>-->
+<!--				<td>John</td>-->
+<!--				<td>Doe</td>-->
+<!--				<td>john@example.com</td>-->
+<!--				<td>ahahjs</td>-->
+<!--			</tr>-->
 		</tbody>
 	</table>
 </div>

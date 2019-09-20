@@ -1,39 +1,37 @@
+<!-- # -*- coding: utf-8 -*-
+
+Created on Tue Sep 17 08:55:31 2019
+
+@author: srishti -->
 
 
-
-
-<!doctype html>
+<!DOCTYPE html>
 {% load staticfiles %}
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+	<meta charset ="utf-8">
+	<title>First App</title>
+	<link rel="stylesheet" href="{% static 'css/mystyle.css' %}"
 </head>
 <body>
-{% if insert_me %}
-<table>
-    <thead>
-    <th>
-        Event Name
-    </th>
-    <th>
-        Event Date
-    </th>
-    </thead>
-{% for acc in insert_me  %}
-<tr>
-    <td> {{ acc.event_name }}</td>
-    <td>{{ acc.event_date }}</td>
-</tr>
-{% endfor %}
-</table>
+
+
+	{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="{{ question.id }}/">{{ question.question_text }}</a></li>
+
+
+        
+    {% endfor %}
+    </ul>
 {% else %}
-<p>No Record Found</p>
+    <p>No polls are available.</p>
 {% endif %}
 
-<!--{{ insert_me }}-->
+	<!-- <h1>Hello</h1>
+	<img src="{% static 'images/1.jpg' %}" alt="IMAGE"> 
+	{{ insert_me }} -->
 </body>
 </html>
+

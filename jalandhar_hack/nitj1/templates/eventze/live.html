@@ -8,6 +8,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+        function hi()
+        {
+            var switchq = document.getElementById("customSwitch1");
+            var iframe = document.getElementById("x-iframe");
+            if(switchq.value=="off")
+            {
+                switchq.value = "on";
+                iframe.src = "/eventze/transcribe/";
+            }
+            else{
+                switchq.value = "off";
+                iframe.src = "https://www.youtube.com/live_chat?v=BaQ44y5FZ7c&amp;embed_domain=192.168.1.100";
+            }
+        }
+  </script>
   <style>
   	.iframe-container{
   		position: relative;
@@ -68,10 +84,29 @@
       </div>
       <hr class="d-sm-none">
     </div>
-    <div class="col-sm-4" style="background-color: #dbdbdb;padding-top: auto;">
+    <div class="col-sm-4" style="background-color: #dbdbdb;padding-top: auto;padding: 0;">
     	<div class="iframe-container" style="height:100%">
-     	 	<iframe src="https://www.youtube.com/live_chat?v=BaQ44y5FZ7c&amp;embed_domain=192.168.1.100"></iframe>
+     	 	<iframe id="x-iframe" src="https://www.youtube.com/live_chat?v=BaQ44y5FZ7c&amp;embed_domain=192.168.1.100"></iframe>
      	</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="padding: 0">
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <th>
+                        <span style="font-size: 2rem; color: white;font-weight: lighter;">Live Stream</span>
+                        <span style="padding-left: 10%;color: white;display: inline-block;">
+                            <div class="custom-control custom-switch">
+                                <input onclick="hi()" value="off" type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">Transcription</label>
+                            </div>
+                        </span>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
     </div>
   </div>
 </div>

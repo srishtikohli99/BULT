@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	var firebaseConfig = {
+  		apiKey: "KmA3IPZjdcV6gn0wHF1t0DSJGSg9iAexvJl8HMow",
+  		authDomain: "smart-audi.firebaseio.com",
+  		databaseURL: "https://smart-audi.firebaseio.com/",
+  		projectId: "smart-audi",
+  		storageBucket: "smart-audi.appspot.com",
+  		messagingSenderId: "246323352532"
+	};
+	firebase.initializeApp(firebaseConfig);
+	var ref = firebase.database().ref();                           
+	ref.on("value", function(snapshot){
+		var LOCALFILE = snapshot.val();
+		transcribe(LOCALFILE);
+	});
+	function transcribe(LOCALFILE)
+	{
+		var x = LOCALFILE.speech_to_text;
+		var trans = document.getElementById("transcribe");
+		var stream = "";
+		var lastkey = "";
+		if( x==null || (Object.keys(x).length === 0 && x.constructor === Object))
+		{
+			var span = document.createElement("span");
+			span.className = "x-info";
+			span.innerHTML = "No stream currently running.";
+			trans.appendChild(span);
+			trans.style.verticalAlign = "middle";
+		}
+		else
+		{
+			trans.style.verticalAlign = "bottom";
+			Object.keys(x).forEach(
+				function(k)
+				{
+					lastkey = k;
+					var sentence = x[k];
+					stream += '<span id="'+k+'" class="normal">'+sentence+'</span><br>'; 
+				}
+			);
+			trans.innerHTML = stream;
+			document.getElementById(lastkey).className = "current";
+			document.getElementById("transcribe").scrollTop = document.getElementById("transcribe").scrollHeight;
+		}
+	}
+</script>
+<body>
+	<style type="text/css">
+
+		/* width */
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background: #888;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: #555;
+		}
+
+		.container{
+			margin: 0;
+			padding: 1px 0px; 
+			/*max-width: none;
+			max-height: 100px;*/
+			width: 100%;
+			height: 100%;
+		}
+		#transcribe{
+			line-height: 1.3;
+			/*max-height: 100px;*/
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		}
+		.normal{
+			font-size: 12px;
+		}
+		.current{
+			font-size: 18px;
+			font-weight: bolder;
+		}
+		.x-info{
+			font-size: 20px;
+		}
+	</style>
+	<div class="container">
+		<div class="col-sm-12 overflow-auto" id="transcribe">
+		</div>	
+	</div>
+</body>
+</html>

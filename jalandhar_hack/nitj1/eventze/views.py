@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from eventze.forms import formfeed
-
+from eventze.models import Event
 #from forms import FormName
 def index(request):
     return HttpResponse("Hello")
@@ -23,10 +23,16 @@ def feed(request):
 def live(request):
 
     return render(request,'eventze/live.html')
+def transcribe(request):
 
+    return render(request, 'eventze/transcribe.html')
 def display(request):
 
-    return render(request,'eventze/display.html')
+    query_results = Event.objects.all()
+
+
+
+    return render(request,'eventze/display.html',{'query_results':query_results})
 
 
 

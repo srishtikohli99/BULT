@@ -21,8 +21,8 @@ import datetime
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(default=timezone.now)
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE,default=1)
+    pub_date = models.DateTimeField('date published')
+    #event_id = models.ForeignKey(Event, on_delete=models.CASCADE,default=1)
     #event_id = models.IntegerField()
 
     def __str__(self):
@@ -30,8 +30,7 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE,blank=True)
-    #question = models.CharField(max_length=200)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 

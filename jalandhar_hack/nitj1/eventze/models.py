@@ -7,7 +7,7 @@ class Event(models.Model):
     event_name = models.CharField(max_length=200)
     event_date = models.DateTimeField('Event Date')
     url = models.URLField()
-    Choices = [('U', 'Upcoming'), ('L', 'Live'),('C','Completed')]
+    Choices = [('Upcoming', 'Upcoming'), ('Live', 'Live'),('Completed','Completed')]
     status = models.CharField(choices=Choices, default='U',max_length=10)
     def __str__(self):
         return self.event_name
