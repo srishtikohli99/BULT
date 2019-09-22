@@ -21,6 +21,34 @@
 <link href="navbar-top-fixed.css" rel="stylesheet">
     <!-- Custom styles for this template -->
 <!--    <link href="navbar-top-fixed.css" rel="stylesheet">-->
+      <style type="text/css">
+        a.button8{
+ display:inline-block;
+ padding:0.2em 1.45em;
+ margin:0.1em;
+ border:0.15em solid #CCCCCC;
+ box-sizing: border-box;
+ text-decoration:none;
+ font-family:'Segoe UI','Roboto',sans-serif;
+ font-weight:400;
+ color:#000000;
+ background-color:#CCCCCC;
+ text-align:center;
+ position:relative;
+}
+a.button8:hover{
+ border-color:#7a7a7a;
+}
+a.button8:active{
+ background-color:#999999;
+}
+@media all and (max-width:30em){
+ a.button8{
+  display:block;
+  margin:0.2em auto;
+ }
+}
+      </style>
   </head>
 
   <body>
@@ -31,7 +59,7 @@
 <!--</div>-->
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">BULT Event Feedback</a>
+      <a class="navbar-brand" href="/home">BULT Admin Panel</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -63,26 +91,24 @@
 <!--        </form>-->
       </div>
     </nav><br><br><br><br>
-  <div class="container">
-      <form method="POST" action="" >
-            {% load crispy_forms_tags %}
-<!--            {{ form.as_p }}-->
-<!--          {{ form|crispy }}-->
-          <div class="row">
-              <div class="col-6">
-                  {{ form.name|as_crispy_field }}
-              </div>
-              <div class="col-6">
-                  {{ form.email|as_crispy_field }}
-              </div>
-              <div class="col-6">
-                  {{ form.feedback|as_crispy_field }}
-              </div>
-          </div>
-          {% csrf_token %}
-          <input type="submit" class="btn btn-primary"value="Submit">
-      </form>
-  </div>
+<!--  <a href="something" class="button1 bouncy">Facebark</a>-->
+<!--<a href="something" class="button1 bouncy" style="animation-delay:0.07s">SJWHub</a>-->
+<!--<a href="something" class="button1 bouncy" style="animation-delay:0.14s">Plebbit</a>-->
+<!--<a href="something" class="button1 bouncy" style="animation-delay:0.21s">4chin</a>-->
 
+
+  <div class="col-md-4 col-lg-2">
+      <a href="/" > <button class="btn btn-primary  btn-block">Database</button></a>
+      <br>
+      <a href="/eventze/seatcontrol/" > <button class="btn btn-primary  btn-block">Seat Control</button></a>
+      <br>
+   <a href="/emergency/testing1/" > <button class="btn btn-primary  btn-block">Transcription ON</button></a>
+    </div><!-- /col -->
+  <!-- /row -->
+  <br>
+  <div class="col-md-4 col-lg-2">
+      <a href="/eventze/feedbacks/" > <button class="btn btn-primary  btn-block">Feedback Sentiment</button></a>
+    </div><!-- /col -->
+  <!-- /row -->
 </body>
 </html>

@@ -16,7 +16,14 @@ Including another URLconf
 from django.contrib import admin
 #from django.urls import path
 from django.urls import include, path
-from polls import views
+from . import views
+#from polls import views
+#from .views import handler404, handler500
+#handler404 = 'my_app.views.handler404'
+
+
+handler404 = 'nitj1.views.handler_404'
+
 urlpatterns = [
 
     path('', admin.site.urls),

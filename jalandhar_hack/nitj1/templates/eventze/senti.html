@@ -11,7 +11,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">BULT Events</a>
+      <a class="navbar-brand" href="/home">BULT Feedback Sentiment</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -47,28 +47,24 @@
 	<table class="table table-hover">
 		<thead class="thead-dark">
 			<tr>
-				<th>Event ID</th>
-				<th>Event Name</th>
-				<th>Event Date</th>
-				<th>Status</th>
+
+				<th>Name</th>
+				<th>Email</th>
+				<th>Feedback</th>
+				<th>Feedback Sentiment</th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for item in query_results %}
-<!--		{{item}}-->
+
+
+				{% for item in query_results %}
 			<tr>
-				<td>{{item.event_id}}</td>
-				<td>{{item.event_name}}</td>
-				<td>{{item.event_date}}</td>
-				<td>{{item.status}}</td>
+				<td>{{ item.name }}</td>
+				<td>{{ item.email }}</td>
+				<td>{{ item.feedback }}</td>
+				<td>{{ item.sentim }}</td>
 			</tr>
 		{% endfor %}
-<!--			<tr>-->
-<!--				<td>John</td>-->
-<!--				<td>Doe</td>-->
-<!--				<td>john@example.com</td>-->
-<!--				<td>ahahjs</td>-->
-<!--			</tr>-->
 		</tbody>
 	</table>
 </div>

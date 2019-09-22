@@ -12,8 +12,17 @@ class Event(models.Model):
     def __str__(self):
         return self.event_name
 
+
+
 class feedback(models.Model):
+    feedback_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     feedback = models.TextField(max_length=1000)
+    sentim = models.CharField(max_length=20,blank=True)
+
+
+
+    def __str__(self):
+        return str(self.feedback_id)
 

@@ -8,4 +8,6 @@ urlpatterns = [
     path('live/',views.live, name='live'),
     path('events/',views.display, name='display'),
     path('transcribe/',views.transcribe, name='transcribe'),
+    path('feedbacks/',views.senti, name='senti'),
+    path('seatcontrol/',views.seatcontrol,name='seatcontrol'),
 ]

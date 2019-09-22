@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from webpush import send_user_notification
 import json
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 from datetime import datetime
 from .trans import servstart
 config = {
@@ -32,7 +34,7 @@ def index(request):
     my_dict = {'insert_me': 'Rahul'}
 
     return render(request, 'emergency/template.html', context=my_dict)
-
+@user_passes_test(lambda u:u.is_staff, login_url='/home/')
 def testing1(request):
     servstart()
     return
@@ -46,8 +48,11 @@ def testing2(request, trancript):
     return HttpResponse("Hel")
 
 def virt(request):
-
-    return HttpResponse("Virtual Handraise Invoked")
+    my_dict = {'insert_me': 'Start'}
+    fire = firebase.FirebaseApplication('https://smart-audi.firebaseio.com/', None)
+    data = {str(datetime.now().microsecond): 'gosh'}
+    snap = fire.patch('/speech_to_text', data)
+    return HttpResponse("Transcription start")
 def test(request):
     my_dict = {'insert_me': 'Srishti'}
     fire = firebase.FirebaseApplication('https://smart-audi.firebaseio.com/', None)

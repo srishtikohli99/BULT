@@ -27,6 +27,14 @@
 		init(LOCALFILE);
 		fillseats(LOCALFILE);
 	});
+	function remove_emer(seat_id)
+	{
+		firebase.database().ref('seats/'+seat_id+'/emergency').set(false);
+	}
+	function remove_hand(seat_id)
+	{
+		firebase.database().ref('seats/'+seat_id+'/hand_raise').set(false);
+	}
 	function init(LOCALFILE)
 	{
 		var x = LOCALFILE.x_num;
@@ -107,7 +115,7 @@
 		{
     		res = res +'<tr><td style="background: purple; color: white; font-weight: bold" colspan="2">Hand Raises</td></tr>';
     		list_hand.forEach(function(k){
-    			res += '<tr><td colspan="2"><img class="img" src="{% static 'images/seat_handraise.png' %}">'+k.toString()+'</td</tr>';
+    			res += '<tr><td colspan="2"><img class="img" src="{% static 'images/seat_handraise.png' %}">'+k.toString()+'<img onclick="remove_hand(\''+k.toString()+'\')" class="img img-cross" src="{% static 'images/cross.png' %}"></td</tr>';
     		});
     	}
 	    res = res + '</tbody></table>';
@@ -201,6 +209,12 @@
 			vertical-align: middle;
 			margin-right: 10px;
 			height: 100%;
+		}
+		.img-cross{
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 10px;
+			height: 2rem;
 		}
 		.table td{
 			vertical-align: middle;

@@ -20,7 +20,7 @@
             }
             else{
                 switchq.value = "off";
-                iframe.src = "https://www.youtube.com/live_chat?v=BaQ44y5FZ7c&amp;embed_domain=192.168.1.100";
+                iframe.src = "{{lc}}";
             }
         }
   </script>
@@ -48,8 +48,7 @@
 <!--</div>-->
 <body style="background-color:#333333">
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">BULT Live</a>
-
+      <a class="navbar-brand" href="/home">BULT Live</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -61,16 +60,23 @@
 <!--              <span class="sr-only">(current)</span>-->
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="/eventze/events/">Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Seating</a>
+            <a class="nav-link" href="/home/seats/">Seating</a>
+          </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="/eventze/feed/">Feedback</a>
+          </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="/polls/onlinepoll/">Polling</a>
           </li>
         </ul>
 <!--        <form class="form-inline mt-2 mt-md-0">-->
-<!--&lt;!&ndash;          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">&ndash;&gt;-->
-<!--&lt;!&ndash;          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>&ndash;&gt;-->
-<!--            <h2 style="color:white">Event Name</h2>-->
+<!--          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+<!--          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
 <!--        </form>-->
       </div>
     </nav><br>
@@ -80,13 +86,15 @@
   <div class="row">
     <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8" style="padding: 0">
       <div class="iframe-container">
-      	<iframe src="https://www.youtube-nocookie.com/embed/BaQ44y5FZ7c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!--      	<iframe src="https://www.youtube-nocookie.com/embed/BaQ44y5FZ7c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+      <iframe src="{{vid}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <hr class="d-sm-none">
     </div>
     <div class="col-sm-4" style="background-color: #dbdbdb;padding-top: auto;padding: 0;">
     	<div class="iframe-container" style="height:100%">
-     	 	<iframe id="x-iframe" src="https://www.youtube.com/live_chat?v=BaQ44y5FZ7c&amp;embed_domain=192.168.1.100"></iframe>
+<!--     	 	<iframe id="x-iframe" src="https://www.youtube.com/live_chat?v=BaQ44y5FZ7c&amp;embed_domain=192.168.1.100"></iframe>-->
+            <iframe id="x-iframe" src="{{lc}}"></iframe>
      	</div>
     </div>
   </div>

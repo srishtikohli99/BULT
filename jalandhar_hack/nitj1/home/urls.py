@@ -7,4 +7,5 @@ urlpatterns = [
     path('seatmap/', views.seats, name='seats'),
     path('seats/',views.seatmap, name='seatmap'),
     path('<numb>',views.rtest, name='rtest'),
+    path('adminpan/',views.adminpan, name='adminpan'),
 ]
